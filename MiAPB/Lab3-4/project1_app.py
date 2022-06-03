@@ -6,20 +6,11 @@ import io
 
 
 def user_input_features():
-    alg = st.sidebar.selectbox('Algorithm', ('Alpha', 'AlphaOneLoop'))
-    if alg == "AlphaOneLoop":
-        thresh_direct_followers = st.sidebar.slider('Threshold direct followers', 0.0, 1.0, 0.5)
-        thresh_parallel = st.sidebar.slider('Threshold parallel', 0.0, 1.0, 0.5)
-        thresh_oneloop = st.sidebar.slider('Threshold one-loop', 0.0, 1.0, 0.5)
-        data = {'alg': 'AlphaOneLoop',
-                'th_d_followers': thresh_direct_followers,
-                'th_par': thresh_parallel,
-                'th_oneloop': thresh_oneloop}
-    else:
-        data = {'alg': 'Alpha',
-                'th_d_followers': None,
-                'th_par': None,
-                'th_oneloop': None}
+    thresh_edge = st.sidebar.slider('Threshold edge filter', 0.0, 100.0, 2000.0)
+    thresh_event = st.sidebar.slider('Threshold event filter', 0.0, 100.0, 2000.0)
+    data = {'th_edge': thresh_edge,
+            'th_event': thresh_event,
+            }
 
     return data
 
@@ -31,10 +22,9 @@ def project1():
     [Example CSV input file](https://facebook.pl)
     """) #wrzucic jakis na gita csv przykladowa
 
-    input_df = {'alg': None,
-            'th_d_followers': None,
-            'th_par': None,
-            'th_oneloop': None}
+    input_df = {'th_edge': None,
+                'th_event': None,
+                }
     # Collects user input features into dataframe
     uploaded_file = st.sidebar.file_uploader("Upload your input CSV file (Only one !)", type=["csv"])
     if uploaded_file is not None:
@@ -43,14 +33,12 @@ def project1():
     # Displays the user input features
     st.subheader('User Output - image')
     graph_ = 'Awaiting CSV file to be uploaded...'
-    if input_df['alg'] is None:
+    if input_df['th_edge'] is None:
         st.write('Awaiting CSV file to be uploaded...')
-    elif input_df['alg'] == 'Alpha':
-
-        G = adv_modify_w_net_task_dur(10,300, uploaded_file)
+    else:
+        G = adv_modify_w_net_task_dur(input_df['th_edge'], input_df['th_event'], uploaded_file)
         sio = io.BytesIO()
         sio.write(G)
         sio.seek(0)
         st.image(sio)
-    else:
-        pass
+
