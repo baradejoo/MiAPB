@@ -1,0 +1,36 @@
+digraph {
+	graph [nodesep=0.8 rankdir=LR splines=ortho]
+	node [shape=Mrecord]
+	edge [penwidth=2]
+	"XORs a->['h', 'f', 'b']" [label="×" fixedsize=true fontsize=35 height=.6 shape=diamond width=.6]
+	a -> "XORs a->['h', 'f', 'b']"
+	"XORs a->['h', 'f', 'b']" -> h
+	"XORs a->['h', 'f', 'b']" -> f
+	"XORs a->['h', 'f', 'b']" -> b
+	"XORs b->['d', 'c']" [label="×" fixedsize=true fontsize=35 height=.6 shape=diamond width=.6]
+	b -> "XORs b->['d', 'c']"
+	"XORs b->['d', 'c']" -> d
+	"XORs b->['d', 'c']" -> c
+	"ANDs h->['j', 'i']" [label="+" fixedsize=true fontsize=40 height=.6 shape=diamond width=.6]
+	h -> "ANDs h->['j', 'i']"
+	"ANDs h->['j', 'i']" -> j
+	"ANDs h->['j', 'i']" -> i
+	"ANDm ['j', 'i']->k" [label="+" fixedsize=true fontsize=40 height=.6 shape=diamond width=.6]
+	"ANDm ['j', 'i']->k" -> k
+	j -> "ANDm ['j', 'i']->k"
+	i -> "ANDm ['j', 'i']->k"
+	"XORm ['g', 'k', 'e']->l" [label="×" fixedsize=true fontsize=35 height=.6 shape=diamond width=.6]
+	"XORm ['g', 'k', 'e']->l" -> l
+	g -> "XORm ['g', 'k', 'e']->l"
+	k -> "XORm ['g', 'k', 'e']->l"
+	e -> "XORm ['g', 'k', 'e']->l"
+	f -> g
+	"XORm ['d', 'c']->e" [label="×" fixedsize=true fontsize=35 height=.6 shape=diamond width=.6]
+	"XORm ['d', 'c']->e" -> e
+	d -> "XORm ['d', 'c']->e"
+	c -> "XORm ['d', 'c']->e"
+	start [label="" shape=circle]
+	start -> a
+	end [label="" shape=circle]
+	l -> end
+}
