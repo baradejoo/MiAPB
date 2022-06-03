@@ -1,0 +1,24 @@
+digraph {
+	graph [nodesep=0.8 rankdir=LR splines=ortho]
+	node [shape=Mrecord]
+	edge [penwidth=2]
+	"XORs b->['c', 'd']" [label="×" fixedsize=true fontsize=35 height=.6 shape=diamond width=.6]
+	b -> "XORs b->['c', 'd']"
+	"XORs b->['c', 'd']" -> c
+	"XORs b->['c', 'd']" -> d
+	"XORm ['d', 'c']->g" [label="×" fixedsize=true fontsize=35 height=.6 shape=diamond width=.6]
+	"XORm ['d', 'c']->g" -> g
+	d -> "XORm ['d', 'c']->g"
+	c -> "XORm ['d', 'c']->g"
+	a -> f
+	start [label="" shape=circle]
+	"ANDs start->{'a', 'b'}" [label="+" fixedsize=true fontsize=40 height=.6 shape=diamond width=.6]
+	start -> "ANDs start->{'a', 'b'}"
+	"ANDs start->{'a', 'b'}" -> a
+	"ANDs start->{'a', 'b'}" -> b
+	end [label="" shape=circle]
+	"ANDm {'f', 'g'}->end" [label="+" fixedsize=true fontsize=40 height=.6 shape=diamond width=.6]
+	"ANDm {'f', 'g'}->end" -> end
+	f -> "ANDm {'f', 'g'}->end"
+	g -> "ANDm {'f', 'g'}->end"
+}
