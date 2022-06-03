@@ -1,4 +1,6 @@
 import pandas as pd
+from pm4py.objects.log.importer.xes import importer as xes_import
+from graph import MyGraph
 
 
 class AlphaAlgorithm_loop:
@@ -24,15 +26,15 @@ class AlphaAlgorithm_loop:
     def read_log_file(self, filepath):
         self.log = set()
 
-        if isinstance(filepath, str):
+        if True:
             # XES file
-            if filepath.endswith('.xes'):
+            if filepath.name.endswith('.xes'):
                 xes_log = xes_import.apply(filepath)
                 for trace in xes_log:
                     event_s = [x['concept:name'] for x in trace]
                     self.log.add(tuple(event_s))
             # CSV
-            elif filepath.endswith('.csv'):
+            elif filepath.name.endswith('.csv'):
                 df = pd.read_csv(filepath,
                                  names=['case_id', 'activity', 'stamp'],
                                  header=1)
@@ -68,7 +70,7 @@ class AlphaAlgorithm_loop:
         self._construct_TO_set()
         self._construct_oneloop_set()
 
-    def create_graph(self, filename='graph', show=False):
+    def create_graph(self, filename=None, show=False):
         if self.log is None:
             print("ERROR: Read log file and build model before creating graph.")
             return
@@ -135,10 +137,13 @@ class AlphaAlgorithm_loop:
             G.edge(inout_df['OUT'][list(self.TO_set)[0]], "end")
 
         # G.format = 'svg'
-        G.render('graph_folder/' + filename, format='jpg', view=True)
+        # G.render('graph_folder/' + filename, format='jpg', view=True)
+        if filename is not None:
+            G.render('graph_folder/' + filename, format='jpg', view=False)
 
-        if show == True:
-            cv2_imshow(imread('graph_folder/graph1-zad1.jpg'))
+        return G
+        # if show == True:
+        #     cv2_imshow(imread('graph_folder/graph1-zad1.jpg'))
 
     def _construct_matrices(self):
         freq_matrix = [[0 for _ in range(len(self.all_events_set))] for _ in range(len(self.all_events_set))]

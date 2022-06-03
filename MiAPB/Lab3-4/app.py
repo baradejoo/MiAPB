@@ -65,7 +65,6 @@ def main():
     if selected == "Project 2":
         st.markdown("<h1 style='text-align: center; color: red;'>Alpha Algorithm</h1>", unsafe_allow_html=True)
         st.markdown("<h5 style='text-align: left; color: white;'>Choose configuration and have fun with making modern graph models!</h5>", unsafe_allow_html=True)
-
         project2()
     if selected == "Contact":
         st.title(f"You have selected {selected}")
